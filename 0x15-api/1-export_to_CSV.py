@@ -1,4 +1,4 @@
-i#!/usr/bin/python3
+#!/usr/bin/python3
 """ a Python script that, for a given employee ID,
 returns information about his/her TODO list progress
 and  export data in the CSV format."""
