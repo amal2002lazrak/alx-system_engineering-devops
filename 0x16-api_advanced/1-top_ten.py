@@ -1,23 +1,22 @@
 #!/usr/bin/python3
-"""printing titles of the first 10 hot posts listed"""
-
+"""
+1-top_ten.py
+"""
 import requests
 
 
 def top_ten(subreddit):
-    """function that queries the Reddit API and prints titles of hot posts"""
-    if subreddit is None:
-        print(None)
-    url = 'http://www.reddit.com/r/{}/hot.json'.format(subreddit)
-    response = requests.get(url)
+    """a function that queries the Reddit API and prints the
+    titles of the first 10 hot posts listed for a given subreddit."""
+
+    url = f"https://www.reddit.com/r/{subreddit}//hot.json"
+    user_header = {'User-Agent': 'custom User-Agent'}
+
+    response = requests.get(url, headers=user_header, allow_redirects=False)
     if response.status_code == 200:
         data = response.json()
-
-        """now lets check if children key is present in the response"""
-        if 'children' in data['data']:
-            for post in data['data']['children']:
-                print(post['data']['title'])
-        else:
-            print(None)
+        posts = data['data']['children']
+        for i, post in enumerate(posts[:10], 1):
+            print(f"{post['data']['title']}")
     else:
-        print(None)
+        print("None")
