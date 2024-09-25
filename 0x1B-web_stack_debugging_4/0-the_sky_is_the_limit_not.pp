@@ -1,12 +1,9 @@
-#fixing my nginx server to go from 943 failed http request to 0
+# Fix limited file descriptors
 
-exec {'replace':
-    provider => shell,
-    command  => 'sudo sed -i \'s/^ULIMIT=.*/ULIMIT="-n 4096"/g\' /etc/default/nginx',
-    before   => Exec['restart'],
+exec { 'fix-nginx':
+  command => '/bin/sed -i \'s/ULIMIT="-n 15"/ULIMIT="-n 4096"/\' /etc/default/nginx',
 }
 
-exec {'restart':
-    provider => shell,
-    command  => 'sudo service nginx restart',
+exec { 'restart-nginx':
+  command => '/usr/sbin/service nginx restart',
 }
